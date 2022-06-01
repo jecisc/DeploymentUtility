@@ -197,7 +197,13 @@ DUFacade class >> resetRepositoryUsersAndPasswords [
 
 { #category : #display }
 DUFacade class >> setHostWindowNameTo: aString [
-	self execute: [ DisplayScreen setWindowTitle: aString ] recordedAs: 'Change host window title to: ' , aString
+
+	self
+		execute: [ 
+			SystemVersion current major < 10
+				ifTrue: [ DisplayScreen setWindowTitle: aString ]
+				ifFalse: [ self currentWorld worldState worldRenderer windowTitle: aString ] ]
+		recordedAs: 'Change host window title to: ' , aString
 ]
 
 { #category : #'see class side' }
